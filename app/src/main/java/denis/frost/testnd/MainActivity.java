@@ -49,7 +49,6 @@ public class MainActivity extends AppCompatActivity
 
     private MovieDBManager db;
 
-    // My Token f836266a-c461-451d-b697-7e01d11b1a3b
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
