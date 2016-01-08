@@ -1,0 +1,21 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+    <EditTextPreference
+        android:key="Edit_film_count_from"
+        android:title="@string/pref_title_display_name_from"
+        android:defaultValue="1"
+        android:selectAllOnFocus="true"
+        android:inputType="number"
+        android:singleLine="true"
+        android:maxLines="1" />
+    <EditTextPreference
+        android:key="Edit_film_count_to"
+        android:title="@string/pref_title_display_name_to"
+        android:defaultValue="20"
+        android:selectAllOnFocus="true"
+        android:inputType="number"
+        android:singleLine="true"
+        android:maxLines="1" />
+
+</PreferenceScreen>
