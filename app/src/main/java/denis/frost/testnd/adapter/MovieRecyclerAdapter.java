@@ -1,4 +1,4 @@
-package denis.frost.testnd.recycleradapter;
+package denis.frost.testnd.adapter;
 
 
 import android.content.Context;

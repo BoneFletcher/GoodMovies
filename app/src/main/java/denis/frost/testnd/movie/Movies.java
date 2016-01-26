@@ -34,7 +34,7 @@ public class Movies {
             FIELD_RATING,
             FIELD_PLOT
     };
-    public long id;
+    public int id;
     private String title, thumbnailUrl;
     private int year;
     private int ranking;
@@ -44,17 +44,6 @@ public class Movies {
 
     public Movies() {
     }
-//    public Movies(String name, String thumbnailUrl, String year, String rating, String ranking, String plot,
-//                  ArrayList<String> genre) {
-//        this.title = name;
-//        this.thumbnailUrl = thumbnailUrl;
-//        this.year = year;
-//        this.rating = rating;
-//        this.ranking = ranking;
-//        this.plot = plot;
-//        this.genre = genre;
-//    }
-
     public String getTitle() {
         return title;
     }
@@ -113,7 +102,7 @@ public class Movies {
 
     public static Movies getItemFromCursor(Cursor curs) {
         Movies mItem = new Movies();
-        mItem.id = curs.getLong(curs.getColumnIndex(Movies.FIELD_ID));
+        mItem.id = curs.getInt(curs.getColumnIndex(Movies.FIELD_ID));
         mItem.setTitle(curs.getString(curs.getColumnIndex(Movies.FIELD_TITLE)));
         mItem.setThumbnailUrl(curs.getString(curs.getColumnIndex(Movies.FIELD_THUMBNAIL)));
         mItem.setYear(curs.getInt(curs.getColumnIndex(Movies.FIELD_YEAR)));
@@ -132,5 +121,23 @@ public class Movies {
         mItem.plot = json.getString(KEY_JSON_PLOT);
 
         return mItem;
+    }
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Movies movieItem = (Movies) o;
+
+        if (id != movieItem.id) return false;
+        return title.equals(movieItem.title);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + title.hashCode();
+        return result;
     }
 }

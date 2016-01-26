@@ -36,13 +36,13 @@ public class MovieInfoActivity extends AppCompatActivity {
         tvRanking = (TextView) findViewById(R.id.tv_ranking);
         tvGenres = (TextView) findViewById(R.id.tv_genres);
         tvPlot = (TextView) findViewById(R.id.tv_plot);
-        String tumblUrl = "";
-        String title = "";
-        int year = 0;
-        double rating = 0.0;
-        int ranking = 0;
-        String genres = " ";
-        String plot = " ";
+        String tumblUrl;
+        String title;
+        int year;
+        double rating;
+        int ranking;
+        String genres;
+        String plot;
         title = getIntent().getExtras().getString("title");
         tumblUrl = getIntent().getExtras().getString("thumblUrl");
         year = getIntent().getExtras().getInt("year");
@@ -57,15 +57,6 @@ public class MovieInfoActivity extends AppCompatActivity {
         tvGenres.setText(genres);
         tvPlot.setText(plot);
         Picasso.with(getApplicationContext()).load(tumblUrl).into(ivPoster);
-        //Передача массива по интенту
-//        Bundle bundleMas=getIntent().getExtras().getBundle("mas");
-//        int size = bundleMas.getInt("StrArrays");
-//        String[] mas;
-//        mas=new String[size];
-//        for(int n = 0; n < mas.length; n++)
-//            mas[n]=bundleMas.getString("Array"+n);
-//
-//    }
         setupActionBar();
     }
     @Override
@@ -76,7 +67,6 @@ public class MovieInfoActivity extends AppCompatActivity {
     private void setupActionBar() {
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            // Show the Up button in the action bar.
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
     }
@@ -92,16 +82,6 @@ public class MovieInfoActivity extends AppCompatActivity {
                startActivity(i);
             return true;
         }
-//        switch (item.getItemId()) {
-//            case R.id.home:
-//                startActivity(new Intent(MovieInfoActivity.this, MainActivity.class));
-//                finish();
-//                return true;
-//            case R.id.action_settings:
-//                Intent i = new Intent(MovieInfoActivity.this, SettingsActivity.class);
-//                startActivity(i);
-//                break;
-//        }
         return super.onOptionsItemSelected(item);
     }
 

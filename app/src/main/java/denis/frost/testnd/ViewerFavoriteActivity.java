@@ -12,7 +12,7 @@ import java.util.List;
 
 import denis.frost.testnd.database.MovieDBManager;
 import denis.frost.testnd.movie.Movies;
-import denis.frost.testnd.recycleradapter.MovieRecyclerAdapter;
+import denis.frost.testnd.adapter.MovieRecyclerAdapter;
 
 
 /**

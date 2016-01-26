@@ -11,7 +11,6 @@ import android.os.IBinder;
 import android.util.Log;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -63,14 +62,16 @@ public class MovieService extends Service {
                 JSONObject json = jsonarray.optJSONObject(i);
                 Movies movies = Movies.getItemFromJson(json);
                 MovieDBManager db = new MovieDBManager(getBaseContext());
-                try {
+                Movies moviesDB = db.get(i);
+                if (movies.equals(moviesDB)) {
+                    db.delete(movies);
                     movies.id = (int) db.save(movies);
-                } catch (Exception e) {
-                    e.printStackTrace();
                 }
+                else
+                    movies.id = (int) db.save(movies);
                 movieList.add(movies);
             }
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -107,25 +108,23 @@ public class MovieService extends Service {
         @Override
         protected void onPostExecute(Integer result) {
             Intent intent = new Intent(Constants.BROADCAST_ACTION);
+            intent.putExtra(Constants.PARAM_STATUS, Constants.STATUS_START);
+            sendBroadcast(intent);
             if (result == 1) {
                 intent.putExtra(Constants.PARAM_STATUS, Constants.STATUS_START);
                 sendBroadcast(intent);
             } else {
                 intent.putExtra(Constants.PARAM_STATUS, Constants.STATUS_STOP);
+                sendBroadcast(intent);
             }
         }
     }
     void sendNotif() {
         Context context = getApplicationContext();
-        // 1-я часть
         Notification.Builder builder = new Notification.Builder(MovieService.this);
-
-        // 3-я часть
         Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Constants.FILE_NAME, "somefile");
         PendingIntent pIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        // 2-я часть
         builder.setAutoCancel(false)
                 .setTicker("See the movies")
                 .setContentTitle("Update DB")
@@ -134,12 +133,9 @@ public class MovieService extends Service {
                 .setContentIntent(pIntent)
                 .setWhen(System.currentTimeMillis())
                 .build();
-
-        // Notification notification = builder.getNotification(); // до API 16
         Notification notification = builder.build();
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(Constants.NOTIFY_ID, notification);
     }
 }
