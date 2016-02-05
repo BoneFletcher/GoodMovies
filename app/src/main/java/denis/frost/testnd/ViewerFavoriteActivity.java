@@ -35,7 +35,7 @@ public class ViewerFavoriteActivity extends AppCompatActivity {
         movieList = new ArrayList<>();
         for (int i =1; i<=20;i++){
             try {
-                movieList.add(db.get(i));
+                movieList.add(db.getImdbTop250(i));
             } catch (SQLException e) {
                 e.printStackTrace();
             }

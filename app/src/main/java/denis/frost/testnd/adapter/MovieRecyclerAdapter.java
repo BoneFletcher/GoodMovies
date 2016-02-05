@@ -69,7 +69,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
 //                Bundle bundle=new Bundle(); //создаем посылочку
 //                ArrayList<String> genre = movies.getGenre();
 //                bundle.putInt("StrArrays", genre.size()); //пишем размер массива массивов
-//                for(int n=0; n < genre.size(); n++) bundle.putString("Array"+n, genre.get(n));//пишем нумерованный массив
+//                for(int n=0; n < genre.size(); n++) bundle.putString("Array"+n, genre.getImdbTop250(n));//пишем нумерованный массив
 //                intentToMovieInfo.putExtra("mas", bundle); // засылаем посылочку в Intent
 
 //                ArrayList<String> genre = movies.getGenre();
@@ -93,15 +93,15 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<MovieRecyclerAdap
                         editor.apply();
                         if ((movieViewHolder).checkFavorite.isChecked()) {
                             Toast.makeText(mContext, "Film favorite", Toast.LENGTH_SHORT).show();
-                            //     ClassForMovie.classForMovie.add(movieList.get(i));
+                            //     ClassForMovie.classForMovie.add(movieList.getImdbTop250(i));
                             try {
-                                mdb.save(movieList.get(i));
+                                mdb.saveImdbTop250(movieList.get(i));
                             } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         } else {
                             Toast.makeText(mContext, "Film not favorite", Toast.LENGTH_SHORT).show();
-                            //   ClassForMovie.classForMovie.remove(movieList.get(i));
+                            //   ClassForMovie.classForMovie.remove(movieList.getImdbTop250(i));
                             movieViewHolder.checkFavorite.setChecked(false);
                             try {
                                 mdb.delete(movieList.get(i));

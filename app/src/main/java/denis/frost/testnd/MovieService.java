@@ -62,13 +62,15 @@ public class MovieService extends Service {
                 JSONObject json = jsonarray.optJSONObject(i);
                 Movies movies = Movies.getItemFromJson(json);
                 MovieDBManager db = new MovieDBManager(getBaseContext());
-                Movies moviesDB = db.get(i);
+                Movies moviesDB = db.getImdbTop250(i);
                 if (movies.equals(moviesDB)) {
-                    db.delete(movies);
-                    movies.id = (int) db.save(movies);
+                    db.updateMovies(movies);
+                    db.deleteAll();
+//                    db.delete(movies);
+                    db.saveImdbTop250(movies);
                 }
                 else
-                    movies.id = (int) db.save(movies);
+                   db.saveImdbTop250(movies);
                 movieList.add(movies);
             }
         } catch (Exception e) {

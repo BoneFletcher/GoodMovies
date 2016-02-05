@@ -8,8 +8,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class Movies {
-    public static final String TABLE_MOVIE = "movie_db";
-    public static final String TABLE_MOVIE_FAVORITE = "movie_db_favorite";
+    public static final String TABLE_IMDB_TOP_250 = "imdbtop250_db";
+    public static final String TABLE_IN_THEATERS = "intheaters_db";
+    public static final String TABLE_COMING_SOON = "comingsoon_db";
     public static final String FIELD_ID = "_id";
     public static final String FIELD_TITLE = "title";
     public static final String FIELD_THUMBNAIL = "thumbnail";
@@ -17,6 +18,7 @@ public class Movies {
     public static final String FIELD_PLOT = "plot";
     public static final String FIELD_RATING = "rating";
     public static final String FIELD_RANKING = "ranking";
+    public static final String FIELD_RELEASE_DATE = "releasedate";
 
     public static final String KEY_JSON_TITLE = "title";
     public static final String KEY_JSON_URLPOSTER = "urlPoster";
@@ -24,6 +26,7 @@ public class Movies {
     public static final String KEY_JSON_RATING = "rating";
     public static final String KEY_JSON_RANKING = "ranking";
     public static final String KEY_JSON_PLOT = "plot";
+    public static final String KEY_JSON_RELEASE_DATE = "releaseDate";
 
     public static String [] projections = {
             FIELD_ID,
@@ -40,6 +43,7 @@ public class Movies {
     private int ranking;
     private String plot;
     private double rating;
+    private int releaseDate;
     private ArrayList<String> genre;
 
     public Movies() {
@@ -100,6 +104,14 @@ public class Movies {
         this.plot = plot;
     }
 
+    public int getReleaseDate() {
+        return releaseDate;
+    }
+
+    public void setReleaseDate(int releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
     public static Movies getItemFromCursor(Cursor curs) {
         Movies mItem = new Movies();
         mItem.id = curs.getInt(curs.getColumnIndex(Movies.FIELD_ID));
@@ -121,6 +133,16 @@ public class Movies {
         mItem.plot = json.getString(KEY_JSON_PLOT);
 
         return mItem;
+    } public static Movies getItemFromJsonInTheaters(JSONObject json) throws JSONException {
+        Movies mItem = new Movies();
+        mItem.title = json.getString(KEY_JSON_TITLE);
+        mItem.thumbnailUrl = json.getString(KEY_JSON_URLPOSTER);
+        mItem.year = json.getInt(KEY_JSON_YEAR);
+        mItem.releaseDate = json.getInt(KEY_JSON_RELEASE_DATE);
+ //       mItem.rating = json.getDouble(KEY_JSON_RATING);
+        mItem.plot = json.getString(KEY_JSON_PLOT);
+
+        return mItem;
     }
     @Override
     public boolean equals(Object o) {
@@ -129,7 +151,7 @@ public class Movies {
 
         Movies movieItem = (Movies) o;
 
-        if (id != movieItem.id) return false;
+      //  if (title != movieItem.title) return false;
         return title.equals(movieItem.title);
 
     }

@@ -15,14 +15,5 @@
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
             android:scaleType="centerCrop"/>
-        <CheckBox
-            android:id="@+id/check_favorite"
-            style="?android:attr/starStyle"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
-
-
     </RelativeLayout>
 </android.support.v7.widget.CardView>

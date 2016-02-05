@@ -1,10 +1,8 @@
 package denis.frost.testnd.fragments;
 
-
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -31,7 +29,7 @@ import denis.frost.testnd.adapter.MovieRecyclerAdapter;
 import denis.frost.testnd.database.MovieDBManager;
 import denis.frost.testnd.movie.Movies;
 
-public class ComingSoonFragment extends Fragment{
+public class InTheatersFragment extends Fragment {
     public static final int LAYOUT = R.layout.content_main;
     private View view;
     private static final String LOG_TAG = "my_log";
@@ -45,21 +43,30 @@ public class ComingSoonFragment extends Fragment{
     private List<Movies> qp;
     private MovieDBManager db;
 
-    public static ComingSoonFragment getInstace () {
+    public InTheatersFragment() {
+        // Required empty public constructor
+    }
+    public static InTheatersFragment getInstace () {
         Bundle args = new Bundle();
-        ComingSoonFragment csFragment = new ComingSoonFragment();
-        csFragment.setArguments(args);
-        return csFragment;
+        InTheatersFragment inftFragment = new InTheatersFragment();
+        inftFragment.setArguments(args);
+        return inftFragment;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
         view = inflater.inflate(LAYOUT, container, false);
         movieRV = (RecyclerView) view.findViewById(R.id.rv);
         movieRV.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
-        new AsyncHttpTask().execute("http://www.myapifilms.com/imdb/comingSoon?token=f836266a-c461-451d-b697-7e01d11b1a3b&format=json&language=en-us&date=2016-02");
+        new AsyncHttpTask().execute("http://www.myapifilms.com/imdb/inTheaters?token=f836266a-c461-451d-b697-7e01d11b1a3b&format=json&language=en-us");
         db = new MovieDBManager(getContext());
         try {
             movieListDB = db.getAllImdbTop250();
@@ -76,7 +83,7 @@ public class ComingSoonFragment extends Fragment{
             JSONObject jsonData = obj.getJSONObject("data");
             JSONArray jsonArrayInTheaters = jsonData.getJSONArray("inTheaters");
 
-            //    JSONArray jsonarray = jsonArrayInTheaters.optJSONArray(4);
+        //    JSONArray jsonarray = jsonArrayInTheaters.optJSONArray(4);
             JSONObject jsson = jsonArrayInTheaters.optJSONObject(0);
             JSONArray jsonarray = jsson.getJSONArray("movies");
             movieList = new ArrayList<>();
@@ -137,5 +144,6 @@ public class ComingSoonFragment extends Fragment{
             }
         }
     }
+
 
 }
